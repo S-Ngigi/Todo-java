@@ -29,7 +29,9 @@ dependencies {
     /* Objects to json mapping */
     compile 'com.google.code.gson:gson:2.8.5'
     /* Db manenos */
-    compile group: 'org.postgresql', name: 'postgresql', version: '9.4-1201-jdbc41'
+   /*  compile group: 'org.postgresql', name: 'postgresql', version: '9.4-1201-jdbc41' */
+   compile group: 'com.h2database', name: 'h2', version: '1.4.196' 
+
 }
 
 /* Deployment manenos */

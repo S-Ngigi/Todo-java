@@ -62,7 +62,7 @@ public class Review {
     @Override
     public boolean equals(Object review_object){
         if (this == review_object) return true;
-        if (review_object == null || getClass() != review_object.getClass());
+        if (review_object == null || getClass() != review_object.getClass()) return false;
         /* Type Casting our object to be of type Review */
         Review review_instance = (Review) review_object;
         return id == review_instance.id &&
