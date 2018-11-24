@@ -47,7 +47,7 @@ public class Review {
         return rating;
     }
 
-    public void setRating(int reviewers_rating) {
+    public void setRestaurantRating(int reviewers_rating) {
         this.rating = reviewers_rating;
     }
 
