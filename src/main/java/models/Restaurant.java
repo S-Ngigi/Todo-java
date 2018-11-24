@@ -132,6 +132,9 @@ public class Restaurant {
      * We then type cast our Object as a Restaurant class whereby
      * we check if our property attribute values match.
      * 
+     * Note we are using Object.equals() here similar to when comparing string
+     * objects. This is because we are comparing String values.
+     * 
      * We finally also check the equality of our Restaurant
      * instance on a memory-based level to see if they match.
      *  
