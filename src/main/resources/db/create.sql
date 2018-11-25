@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS foodtypes (
 CREAT TABLE IF NOT EXISTS reviews (
     id serial PRIMARY KEY NOT NULL,
     content VARCHAR NOT NULL,
-    writtenBy VARCHAR NOT NULL,
+    written_by VARCHAR NOT NULL,
     rating VARCHAR NOT NULL,
-    restaurantId INTEGER NOT NULL
+    restaurant_ids INTEGER NOT NULL
 );

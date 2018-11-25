@@ -9,7 +9,7 @@ public interface RestaurantDao{
     void addRestaurant(Restaurant restaurant);
 
     /* Read */
-    List<Restaurant> getAll();
+    List<Restaurant> getAllRestaurants();
     Restaurant getRestaurantById(int id);
 
     /* Update */
