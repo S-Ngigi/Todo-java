@@ -15,17 +15,17 @@ public class ReviewTest{
 
     /* Testing Review's getReview method */
     @Test
-    public void getRestaurantReviewTest(){
+    public void getRestaurantReviewContentTest(){
         Review test_review = reviewSetUp();
-        assertEquals("Fancy and Affordable", test_review.getReview()); 
+        assertEquals("Fancy and Affordable", test_review.getReviewContent()); 
     }
 
     /* Testing Review's setReview method */
     @Test
-    public void setRestaurantReviewTest(){
+    public void setRestaurantReviewContentTest(){
         Review test_review = reviewSetUp();
-        test_review.setReview("Tis Bliss");
-        assertNotEquals("Fancy and Affordable", test_review.getReview());
+        test_review.setReviewContent("Tis Bliss");
+        assertNotEquals("Fancy and Affordable", test_review.getReviewContent());
     }
 
     /* Testing getReviewWrittenBy method */

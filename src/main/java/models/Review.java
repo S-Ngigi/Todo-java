@@ -4,14 +4,14 @@ import java.util.Objects;
 
 public class Review {
     private int id;
-    private String review;
+    private String content;
     private String written_by;
     private int rating;
     private int restaurant_id;  /* One to Many Relationship right here. */
 
     /* Our Review Constructor */
-    public Review(String review, String written_by, int rating, int restaurant_id){
-        this.review = review;
+    public Review(String content, String written_by, int rating, int restaurant_id){
+        this.content = content;
         this.written_by = written_by;
         this.rating = rating;
         this.restaurant_id = restaurant_id;
@@ -27,12 +27,12 @@ public class Review {
         this.id = review_id;
     }
 
-    public String getReview() {
-        return review;
+    public String getReviewContent() {
+        return content;
     }
 
-    public void setReview(String restaurant_review){
-        this.review =  restaurant_review;
+    public void setReviewContent(String restaurant_review){
+        this.content =  restaurant_review;
     }
 
     public String getWrittenBy(){
@@ -68,13 +68,13 @@ public class Review {
         return id == review_instance.id &&
                      rating == review_instance.rating &&
                      restaurant_id == review_instance.restaurant_id &&
-                     Objects.equals(review, review_instance.review) &&
+                     Objects.equals(content, review_instance.content) &&
                      Objects.equals(written_by, review_instance.written_by);
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(id, review, written_by, rating, restaurant_id);
+        return Objects.hash(id, content, written_by, rating, restaurant_id);
     }
 
 }
