@@ -1,0 +1,30 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "Yelpish-Api",
+                "projectName": "Yelpish-Api",
+                "workingDirectory": "/home/jedi/Desktop/Java/Yelpish-Api",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "Yelpish-Api",
+                "projectName": "Yelpish-Api",
+                "workingDirectory": "/home/jedi/Desktop/Java/Yelpish-Api",
+                "args": [],
+                "vmargs": [],
+                "env": {},
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}

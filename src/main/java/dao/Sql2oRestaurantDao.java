@@ -58,7 +58,7 @@ public class Sql2oRestaurantDao implements RestaurantDao {
         String sql_command = "UPDATE restaurants SET (name. address, zipcode, phone, website, email, img_url) = (:name, :address, :zipcode, :phone, :website, :email, :img_url) WHERE id=:id";
 
         try(Connection connect = sql2o.open()){
-            connect.createQuery(sql)
+            connect.createQuery(sql_command)
                             .addParameter("name", new_name)
                             .addParameter("address", new_address)
                             .addParameter("zipcode", new_zipcode)

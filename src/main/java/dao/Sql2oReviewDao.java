@@ -1,40 +1,31 @@
 package dao;
 
-import java.util.List;
-
+import models.Review;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
+import java.util.List;
 
-import models.Review;
+
 
 public class Sql2oReviewDao implements ReviewDao {
 
     /* We create a Sql2o constant. */
     private final Sql2o sql2o;
-    // ? Sql2oReviewDao Constructor? I think so.
     public Sql2oReviewDao(Sql2o sql2o){this.sql2o = sql2o;}
 
-    /* Adding the Review Object to out database. */
     @Override
-    public void addReview(Review review){
-        //  ! If we change our model we will need to change values here as well.
-        /* The sql command */
-        String sql_command = "INSERT INTO reviews (content, written_by, rating,"+
-                                                    " restaurant_id) VALUES (:content, :written_by,"+
-                                                    " rating, :restaurant_id)";
-        /* Connecting to our Db */
-        try  (Connection connect = sql2o.open()){
-        /* Persisting our review object to the db ad returning the generated id */
-                int review_id = (int) connect.createQuery(sql_command, true)
-                                                        .bind(review)
-                                                        .executeUpdate()
-                                                        .getKey();
-                /* Setting the generated pk as our review object's id. */
-                review.setReviewId(review_id);
-        } catch (Sql2oException error) {
-            /* Catch any error and print to terminal */
-            System.out.println("ERROR IN ADDING REVIEW TO DB: " + error);
+    public void addReview(Review review) {
+        String sql = "INSERT INTO reviews (content, written_by, rating, restaurant_id) VALUES (:content, :written_by, :rating, :restaurant_id)";
+
+        try(Connection connect = sql2o.open()){
+            int id = (int) connect.createQuery(sql, true)
+            .bind(review)
+            .executeUpdate()
+            .getKey();
+            review.setReviewId(id);
+        } catch(Sql2oException error){
+            System.out.println(error);
         }
     }
 

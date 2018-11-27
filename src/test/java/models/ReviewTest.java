@@ -13,6 +13,13 @@ public class ReviewTest{
     @After
     public void tearDown() throws Exception{}
 
+    @Test
+    public void setReviewIdTest() throws Exception {
+        Review test_review = reviewSetUp();
+        test_review.setReviewId(7);
+        assertEquals(7, test_review.getReviewId());
+    }
+
     /* Testing Review's getReview method */
     @Test
     public void getRestaurantReviewContentTest(){

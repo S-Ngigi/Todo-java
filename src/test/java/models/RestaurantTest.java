@@ -117,6 +117,7 @@ public class RestaurantTest {
     public void setRestaurantImageTest() throws Exception{
         Restaurant test_restaurant = restaurantAltSetUp();
         test_restaurant.setRestaurantImage("https://bit.ly/2KwknSj");
+        assertNotEquals( "https://bit.ly/2Btwb4O", test_restaurant.getRestaurantImage());
     }
 
     public Restaurant restaurantSetUp(){
