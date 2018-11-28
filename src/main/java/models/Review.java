@@ -39,8 +39,8 @@ public class Review {
         return written_by;
     }
 
-    public void setWrittenBy(String review_writter){
-        this.written_by = review_writter;
+    public void setWrittenBy(String review_writer){
+        this.written_by = review_writer;
     }
 
     public int getRestaurantRating(){

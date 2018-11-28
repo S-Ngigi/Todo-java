@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.sql2o.Connection;
 import org.junit.Test;
 import org.sql2o.Sql2o;
+import org.sql2o.Sql2oException;
 
 
 import static org.junit.Assert.*;
@@ -40,8 +41,8 @@ public class Sql2oReviewDaoTest{
         "id serial PRIMARY KEY NOT NULL," + 
         "content VARCHAR NOT NULL," + 
         "written_by VARCHAR NOT NULL," + 
-        "rating INTEGER NOT NULL ,"  +
-         "restaurant_id INTEGER NOT NULL)";
+        "rating INTEGER NOT NULL,"  +
+        "restaurant_id INTEGER NOT NULL)";
         connect_test = sql2o.open();
         connect_test.createQuery(create_review).executeUpdate();
     }
@@ -57,8 +58,26 @@ public class Sql2oReviewDaoTest{
 
     @Test
     public void addingReviewSetsIdTest() throws Exception {
-        Review test_review = new Review("Testing", "Test", 1, 1);
+        /*Review test_review = new Review("Testing", "Test", 1, 1);
         review_dao.addReview(test_review);
+        assertEquals(1, test_review.getReviewId());*/
+        Review test_review = new Review("Whaaat is this!", "@$?!!", 1, 1);
+        String connection_string = "jdbc:postgresql://localhost:5432/yelpish_test";
+        Sql2o sql2o = new Sql2o(connection_string, "jedi", "test54321");
+        review_dao = new Sql2oReviewDao(sql2o);
+        String insert_command = "INSERT INTO reviews (content, written_by,  rating, restaurant_id) VALUES (:content, :written_by,  :rating, :restaurant_id)";
+        try(Connection connect_test = sql2o.open()){
+            int id = (int) connect_test.createQuery(insert_command, true)
+                    .addParameter("content", test_review.getReviewContent())
+                    .addParameter("written_by", test_review.getWrittenBy())
+                    .addParameter("rating", test_review.getRestaurantRating())
+                    .addParameter("restaurant_id", test_review.getRestaurantId())
+                    .executeUpdate().getKey();
+            test_review.setReviewId(id);
+        } catch (Sql2oException error) {
+            System.out.println("CAN YOU SEE ME!!: " + error);
+        }
+
         assertEquals(1, test_review.getReviewId());
     }
 
