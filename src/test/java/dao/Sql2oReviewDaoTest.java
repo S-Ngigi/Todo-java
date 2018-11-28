@@ -1,4 +1,6 @@
 package dao;
+import org.apache.log4j.Logger;
+import org.apache.log4j.BasicConfigurator;
 
 import models.Restaurant;
 import models.Review;
@@ -13,6 +15,7 @@ import org.sql2o.Sql2oException;
 import static org.junit.Assert.*;
 
 public class Sql2oReviewDaoTest{
+    static Logger logger = Logger.getLogger(Sql2oReviewDaoTest.class);
 
     private Connection connect_test;
     private Sql2oReviewDao review_dao;
@@ -58,21 +61,21 @@ public class Sql2oReviewDaoTest{
 
     @Test
     public void addingReviewSetsIdTest() throws Exception {
+        BasicConfigurator.configure();
+
         /*Review test_review = new Review("Testing", "Test", 1, 1);
         review_dao.addReview(test_review);
         assertEquals(1, test_review.getReviewId());*/
-        Review test_review = new Review("Whaaat is this!", "@$?!!", 1, 1);
         String connection_string = "jdbc:postgresql://localhost:5432/yelpish_test";
         Sql2o sql2o = new Sql2o(connection_string, "jedi", "test54321");
         review_dao = new Sql2oReviewDao(sql2o);
+        Review test_review = new Review("Whaaat is this!", "@$?!!", 1, 77);
         String insert_command = "INSERT INTO reviews (content, written_by,  rating, restaurant_id) VALUES (:content, :written_by,  :rating, :restaurant_id)";
         try(Connection connect_test = sql2o.open()){
             int id = (int) connect_test.createQuery(insert_command, true)
-                    .addParameter("content", test_review.getReviewContent())
-                    .addParameter("written_by", test_review.getWrittenBy())
-                    .addParameter("rating", test_review.getRestaurantRating())
-                    .addParameter("restaurant_id", test_review.getRestaurantId())
-                    .executeUpdate().getKey();
+                    .bind(test_review)
+                    .executeUpdate()
+                    .getKey(Review.class);
             test_review.setReviewId(id);
         } catch (Sql2oException error) {
             System.out.println("CAN YOU SEE ME!!: " + error);
