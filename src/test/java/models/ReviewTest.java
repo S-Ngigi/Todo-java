@@ -54,7 +54,7 @@ public class ReviewTest{
     @Test
     public void getRestaurantRatingTest() throws Exception {
         Review  test_review = reviewSetUp();
-        assertEquals(4, test_review.getRestaurant_id());
+        assertEquals(4, test_review.getRating());
     }
 
      /*TestinZg setRestaurantRating */
