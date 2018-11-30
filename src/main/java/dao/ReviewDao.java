@@ -5,5 +5,5 @@ import models.Review;
 
 public interface ReviewDao {
     /* Create */
-    void add(Review review);
+    void addReview(Review review);
 }

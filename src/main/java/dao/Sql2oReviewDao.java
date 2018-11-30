@@ -11,7 +11,7 @@ public class Sql2oReviewDao implements ReviewDao {
     public Sql2oReviewDao (Sql2o sql2o) {this.sql2o=sql2o;}
 
     @Override
-    public void add(Review review) {
+    public void addReview(Review review) {
         String sql = "INSERT INTO reviews (content, written_by, rating, restaurant_id) VALUES (:content, :written_by, :rating, :restaurant_id)";
 
         try(Connection connect = sql2o.open()) {

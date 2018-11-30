@@ -7,10 +7,11 @@ public class Review {
     private String content;
     private String written_by;
     private int rating;
-    private int restaurant_id;  /* One to Many Relationship right here. */
+    private int restaurant_id;   // One to Many Relationship right here.
 
     /* Our Review Constructor */
-    public Review(String content, String written_by, int rating, int restaurant_id){
+    public Review(String content , String written_by, int rating, int restaurant_id){
+
         this.content = content;
         this.written_by = written_by;
         this.rating = rating;
@@ -27,35 +28,35 @@ public class Review {
         this.id = review_id;
     }
 
-    public String getReviewContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setReviewContent(String restaurant_review){
+    public void setContent(String restaurant_review){
         this.content =  restaurant_review;
     }
 
-    public String getWrittenBy(){
+    public String getWritten_by(){
         return written_by;
     }
 
-    public void setWrittenBy(String review_writter){
-        this.written_by = review_writter;
+    public void setWritten_by(String review_writer){
+        this.written_by = review_writer;
     }
 
-    public int getRestaurantRating(){
+    public int getRating(){
         return rating;
     }
 
-    public void setRestaurantRating(int reviewers_rating) {
+    public void setRating(int reviewers_rating) {
         this.rating = reviewers_rating;
     }
 
-    public int getRestaurantId(){
+    public int getRestaurant_id(){
         return restaurant_id;
     }
 
-    public void setRestaurantId(int restaurant_id){
+    public void setRestaurant_id(int restaurant_id){
         this.restaurant_id = restaurant_id;
     }
 
@@ -70,11 +71,13 @@ public class Review {
                      restaurant_id == review_instance.restaurant_id &&
                      Objects.equals(content, review_instance.content) &&
                      Objects.equals(written_by, review_instance.written_by);
+
     }
 
     @Override
     public int hashCode(){
-        return Objects.hash(id, content, written_by, rating, restaurant_id);
+        return Objects.hash(id, content);
+        /*, written_by, rating, restaurant_id*/
     }
 
 }
