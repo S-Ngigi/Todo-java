@@ -59,21 +59,21 @@ public class ReviewTest{
 
      /*TestinZg setRestaurantRating */
     @Test
-    public void seRestauranttRatingTest() throws Exception{
+    public void seRestaurantRatingTest() throws Exception{
         Review test_review = reviewSetUp();
         test_review.setRating(5);
         assertNotEquals(4, test_review.getRating());
     }
 
-     /*Testing getRestaurantId method */
+     /*Testing getId method */
     @Test
-    public void getRestaurantIdTest() throws Exception{
+    public void getIdTest() throws Exception{
         Review test_review = reviewSetUp();
         assertEquals(1, test_review.getRestaurant_id());
     }
 
     @Test
-    public void setRestaurantIdTest() throws Exception{
+    public void setIdTest() throws Exception{
         Review test_review = reviewSetUp();
         test_review.setRestaurant_id(2);
         assertNotEquals(1,  test_review.getRestaurant_id());

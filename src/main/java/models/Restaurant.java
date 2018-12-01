@@ -53,43 +53,43 @@ public class Restaurant {
 
     /* Getters and Setters */
 
-    public int getRestaurantId(){
+    public int getId(){
         return id;
     }
 
-    public void setRestaurantId(int restaurant_id){
+    public void setId(int restaurant_id){
         this.id = restaurant_id;
     }
 
-    public String getRestaurantName(){
+    public String getName(){
         return name;
     }
 
-    public void setRestaurantName(String restaurant_name){
+    public void setName(String restaurant_name){
         this.name = restaurant_name;
     }
 
-    public String getRestaurantAddress(){
+    public String getAddress(){
         return this.address;
     }
 
-    public void setRestaurantAddress(String restaurant_address){
+    public void setAddress(String restaurant_address){
         this.address = restaurant_address;
     }
 
-    public String getRestaurantZipcode(){
+    public String getZipcode(){
         return zipcode;
     }
 
-    public void setRestaurantZipcode(String restaurant_zipcode){
+    public void setZipcode(String restaurant_zipcode){
         this.zipcode = restaurant_zipcode;
     }
 
-    public String getRestaurantPhone(){
+    public String getPhone(){
         return phone;
     }
 
-    public void setRestaurantPhone(String restaurant_phone){
+    public void setPhone(String restaurant_phone){
         this.phone = restaurant_phone;
     }
 
@@ -101,19 +101,19 @@ public class Restaurant {
         this.website = restaurant_website;
     }
     
-    public String getRestaurantEmail(){
+    public String getEmail(){
         return email;
     }
 
-    public void setRestaurantEmail(String restaurant_email){
+    public void setEmail(String restaurant_email){
         this.email = restaurant_email;
     }
 
-    public String getRestaurantImage(){
+    public String getImg_url(){
         return img_url;
     }
 
-    public void setRestaurantImage(String restaurant_img){
+    public void setImg_url(String restaurant_img){
         this.img_url = restaurant_img;
     }
 

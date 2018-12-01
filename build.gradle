@@ -2,6 +2,10 @@ plugins {
     id 'java'
     id 'application'
 }
+
+compileJava.options.fork = true
+compileJava.options.forkOptions.executable = '/home/jedi/.sdkman/candidates/java/current/bin/javac'
+
 /* Deployment manenos */
 applicationName = "Yelpish-Api"
 mainClassName = 'App'
@@ -10,6 +14,7 @@ group 'hai.com'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -33,6 +38,7 @@ dependencies {
     compile group: 'com.h2database', name: 'h2', version: '1.4.196'
     
 }
+
 
 /* Deployment manenos */
 defaultTasks = ['clean']

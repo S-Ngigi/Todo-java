@@ -76,8 +76,7 @@ public class Review {
 
     @Override
     public int hashCode(){
-        return Objects.hash(id, content);
-        /*, written_by, rating, restaurant_id*/
+        return Objects.hash(id, content, written_by, rating, restaurant_id);
     }
 
 }

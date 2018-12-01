@@ -17,8 +17,8 @@ public class Sql2oRestaurantDao implements RestaurantDao {
     @Override
     public void addRestaurant(Restaurant restaurant){
         String sql_command = "INSERT INTO restaurants (" +
-        "name, address, zipcode, phone, website, email,  img_url)" +
-        " VALUES (name, address, zipcode, phone, website, email, img_url)";
+        "name, address, zipcode, phone, website, email, img_url)" +
+        " VALUES (:name, :address, :zipcode, :phone, :website, :email, :img_url)";
 
         try(Connection connect = sql2o.open()){
             int restaurant_id = (int) connect.createQuery(sql_command, true)
@@ -26,7 +26,7 @@ public class Sql2oRestaurantDao implements RestaurantDao {
                                                         .executeUpdate()
                                                         .getKey();
 
-            restaurant.setRestaurantId(restaurant_id);
+            restaurant.setId(restaurant_id);
         } catch (Sql2oException error) {
             System.out.println("ERROR WHEN ADDING RESTAURANT TO DB: " + error);
         }
@@ -44,7 +44,7 @@ public class Sql2oRestaurantDao implements RestaurantDao {
     public Restaurant getRestaurantById(int restaurant_id){
         try(Connection connect = sql2o.open()){
             return connect.createQuery(
-                "SELECT FROM restaurant WHERE id = :restaurand_id"
+                "SELECT FROM restaurant WHERE id = :restaurant_id"
             ).addParameter("restaurant_id", restaurant_id )
              .executeAndFetchFirst(Restaurant.class);
         }
