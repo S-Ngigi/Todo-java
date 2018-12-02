@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
 );
 
 CREATE TABLE IF NOT EXISTS foodtypes (
-    id int PRIMARY KEY,
+    id int PRIMARY KEY auto_increment,
     name VARCHAR
 );
 

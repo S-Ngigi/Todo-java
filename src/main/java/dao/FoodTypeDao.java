@@ -1,7 +1,7 @@
 package dao;
 
 import models.FoodType;
-import java.util.List;
+/* import java.util.List; */
 
 public interface FoodTypeDao {
     /*  
@@ -33,7 +33,7 @@ public interface FoodTypeDao {
      void addFoodType(FoodType foodtype);
 
      /* Read */
-     List<FoodType> getAllFoodTypes();
+     /* List<FoodType> getAllFoodTypes(); */
 
      // Todo: FoodType getFoodTypeById(int id);
 
@@ -42,8 +42,8 @@ public interface FoodTypeDao {
     //  Todo: FoodType updateFoodType(int id);
 
     /* Delete */
-    void deleteFoodType(int id);
-    void clearAllFoodtypes();
+   /*  void deleteFoodType(int id);
+    void clearAllFoodtypes(); */
 
 
 }

@@ -135,11 +135,11 @@ public class RestaurantTest {
     }
 
     public Restaurant restaurantAltSetUp(){
-        Restaurant brief_restaurant = new Restaurant(
+        Restaurant alt_restaurant = new Restaurant(
             "Gramercy Tavern",
             "42 E 20th St, New York",
             "NY 10003",
             "+1 212-477-0777");
-        return brief_restaurant;
+        return alt_restaurant;
     }
 }
