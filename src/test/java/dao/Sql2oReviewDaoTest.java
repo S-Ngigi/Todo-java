@@ -69,6 +69,7 @@ public class Sql2oReviewDaoTest{
     public void clearAllReviewTest() throws Exception {
         Review review_one = reviewSetUp();
         Review review_two = reviewSetUp();
+        System.out.println(review_one.getReviewId() + " " + review_two.getReviewId());
         review_dao.clearAllReviews();
         assertEquals(0, review_dao.getAllReviews().size() );
     }
