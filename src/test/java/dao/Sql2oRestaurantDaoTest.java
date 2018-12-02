@@ -34,6 +34,41 @@ public class Sql2oRestaurantDaoTest {
         assertEquals(1, test_restaurant.getId());
     }
 
+    @Test
+    public void getAllRestaurantTest() throws Exception {
+        Restaurant restaurant_1 = restaurantSetUp();
+        Restaurant restaurant_2 = restaurantSetUp();
+        assertNotEquals(restaurant_1.getId(), restaurant_2.getId());
+        assertEquals(2, restaurant_dao.getAllRestaurants().size());
+    }
+
+    @Test
+    public void getRestaurantByIdTest() throws Exception {
+        Restaurant restaurant_1 = restaurantSetUp();
+        Restaurant restaurant_2 = restaurantSetUp();
+        assertNotEquals(restaurant_1.getId(), restaurant_2.getId());
+        assertEquals(
+            2, restaurant_dao.getRestaurantById(restaurant_2.getId()).getId());
+    }
+
+    @Test
+    public void updateRestaurantTest() throws Exception {
+        Restaurant test_restaurant = restaurantSetUp();
+        restaurant_dao.updateRestaurant(
+                test_restaurant.getId(),
+                " Eleven Madison Park",
+                "11 Madison Ave, New York",
+                "NY 10010",
+                "+1 212-889-0905",
+                "elevenmadisonpark.com",
+                "info@elevenmadisonpark.com",
+                "https://bit.ly/2KwknSj"
+        );
+        Restaurant updated_restaurant = restaurant_dao.getRestaurantById(test_restaurant.getId());
+        System.out.println(updated_restaurant.getName());
+        assertNotEquals("Gramercy Tavern", updated_restaurant.getName());
+    }
+
     /* Helper functions */
     //  Full restaurant details
     public Restaurant restaurantSetUp() {

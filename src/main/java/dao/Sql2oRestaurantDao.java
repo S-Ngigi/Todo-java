@@ -43,8 +43,12 @@ public class Sql2oRestaurantDao implements RestaurantDao {
     @Override
     public Restaurant getRestaurantById(int restaurant_id){
         try(Connection connect = sql2o.open()){
+            /*
+             * When returning a restaurant by id we have to say SELECT *.
+             * We can't just say SELECT FROM restaurants WHERE blah..
+             */
             return connect.createQuery(
-                "SELECT FROM restaurant WHERE id = :restaurant_id"
+                "SELECT * FROM restaurants WHERE id = :restaurant_id"
             ).addParameter("restaurant_id", restaurant_id )
              .executeAndFetchFirst(Restaurant.class);
         }
@@ -55,7 +59,7 @@ public class Sql2oRestaurantDao implements RestaurantDao {
         int id, String new_name, String new_address, String new_zipcode, 
         String new_phone, String new_website, String new_email, String new_img
         ){
-        String sql_command = "UPDATE restaurants SET (name. address, zipcode, phone, website, email, img_url) = (:name, :address, :zipcode, :phone, :website, :email, :img_url) WHERE id=:id";
+        String sql_command = "UPDATE restaurants SET (name, address, zipcode, phone, website, email, img_url) = (:name, :address, :zipcode, :phone, :website, :email, :img_url) WHERE id=:id";
 
         try(Connection connect = sql2o.open()){
             connect.createQuery(sql_command)
@@ -66,6 +70,7 @@ public class Sql2oRestaurantDao implements RestaurantDao {
                             .addParameter("website", new_website)
                             .addParameter("email", new_email)
                             .addParameter("img_url", new_img)
+                            .addParameter("id", id)
                             .executeUpdate();
         } catch(Sql2oException error) {
             System.out.println("ERROR IN UPDATING RESTAURANT: " + error);

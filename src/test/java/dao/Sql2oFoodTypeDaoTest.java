@@ -35,6 +35,7 @@ public class Sql2oFoodTypeDaoTest {
         assertEquals(1, test_foodtype.getFoodId());
     }
 
+
     /* Helper functions */
     public FoodType foodtypeSetUp() {
         FoodType dummy_foodtype = new FoodType("Pizza");
