@@ -52,7 +52,7 @@ public class Sql2oFoodTypeDao implements FoodTypeDao {
 
     /* Deleing all FoodType instances */
     @Override
-    public void clearAllFoodtypes(){
+    public void clearAllFoodTypes(){
         try(Connection connect = sql2o.open()){
             connect.createQuery("DELETE FROM foodtypes")
                             .executeUpdate();

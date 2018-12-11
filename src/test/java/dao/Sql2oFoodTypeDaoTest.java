@@ -43,6 +43,26 @@ public class Sql2oFoodTypeDaoTest {
         assertEquals(2, foodtype_dao.getAllFoodTypes().size());
     }
 
+    @Test
+    public void deleteFoodTypeByIdTest() throws Exception {
+        FoodType foodtype_1 = foodtypeSetUp();
+        FoodType foodtype_2 = foodtypeSetUp();
+        assertNotEquals(foodtype_1.getFoodId(), foodtype_2.getFoodId());
+        assertEquals(2, foodtype_dao.getAllFoodTypes().size());
+        foodtype_dao.deleteFoodTypeById(foodtype_1.getFoodId());
+        assertEquals(1, foodtype_dao.getAllFoodTypes().size());
+    }
+
+    @Test
+    public void clearAllFoodtypesTest() throws Exception {
+        FoodType foodtype_1 = foodtypeSetUp();
+        FoodType foodtype_2 = foodtypeSetUp();
+        assertNotEquals(foodtype_1, foodtype_2);
+        assertEquals(2, foodtype_dao.getAllFoodTypes().size());
+        foodtype_dao.clearAllFoodTypes();
+        assertEquals(0, foodtype_dao.getAllFoodTypes().size());
+    }
+
 
     /* Helper functions */
     public FoodType foodtypeSetUp() {

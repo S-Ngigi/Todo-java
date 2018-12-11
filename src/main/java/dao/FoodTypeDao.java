@@ -43,7 +43,7 @@ public interface FoodTypeDao {
 
     /* Delete */
     void deleteFoodTypeById(int id);
-    void clearAllFoodtypes();
+    void clearAllFoodTypes();
 
 
 }
