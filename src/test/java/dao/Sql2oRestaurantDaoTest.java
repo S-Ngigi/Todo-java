@@ -72,7 +72,7 @@ public class Sql2oRestaurantDaoTest {
         assertNotEquals("Gramercy Tavern", updated_restaurant.getName());
     }
 
-    /* Deleting an instance of a restuarant */
+    /* Deleting an instance of a restuarant by Id */
     @Test
     public void deleteRestaurantByIdTest() throws Exception {
         Restaurant restaurant_1 = restaurantSetUp();
@@ -81,6 +81,16 @@ public class Sql2oRestaurantDaoTest {
         assertNotEquals(restaurant_1.getId(), restaurant_2.getId());
         restaurant_dao.deleteRestaurant(restaurant_1.getId());
         assertEquals(1, restaurant_dao.getAllRestaurants().size());
+    }
+
+    @Test
+    public void clearAllRestaurantTest() throws Exception {
+        Restaurant restaurant_1 = restaurantSetUp();
+        Restaurant restaurant_2 = restaurantSetUp();
+        assertNotEquals(restaurant_1.getId(), restaurant_2.getId());
+        assertEquals(2, restaurant_dao.getAllRestaurants().size());
+        restaurant_dao.clearAllRestaurants();
+        assertEquals(0, restaurant_dao.getAllRestaurants().size());
     }
 
 
