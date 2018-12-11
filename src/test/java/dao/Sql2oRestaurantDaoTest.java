@@ -28,12 +28,13 @@ public class Sql2oRestaurantDaoTest {
         test_connection.close();
     }
 
+    /* Id being set properly once restaurant  is added to the db. */
     @Test
     public void addingRestaurantSetsId() throws Exception {
         Restaurant test_restaurant = restaurantSetUp();
         assertEquals(1, test_restaurant.getId());
     }
-
+    /* Getting all restaurant instances stored in the db */
     @Test
     public void getAllRestaurantTest() throws Exception {
         Restaurant restaurant_1 = restaurantSetUp();
@@ -42,6 +43,7 @@ public class Sql2oRestaurantDaoTest {
         assertEquals(2, restaurant_dao.getAllRestaurants().size());
     }
 
+    /* Getting a single instance of  a restaurant working well */
     @Test
     public void getRestaurantByIdTest() throws Exception {
         Restaurant restaurant_1 = restaurantSetUp();
@@ -51,6 +53,7 @@ public class Sql2oRestaurantDaoTest {
             2, restaurant_dao.getRestaurantById(restaurant_2.getId()).getId());
     }
 
+    /* Updating an instance of a restuarant */
     @Test
     public void updateRestaurantTest() throws Exception {
         Restaurant test_restaurant = restaurantSetUp();
@@ -68,6 +71,18 @@ public class Sql2oRestaurantDaoTest {
         System.out.println(updated_restaurant.getName());
         assertNotEquals("Gramercy Tavern", updated_restaurant.getName());
     }
+
+    /* Deleting an instance of a restuarant */
+    @Test
+    public void deleteRestaurantByIdTest() throws Exception {
+        Restaurant restaurant_1 = restaurantSetUp();
+        Restaurant restaurant_2 = restaurantSetUp();
+        assertEquals(2, restaurant_dao.getAllRestaurants().size());
+        assertNotEquals(restaurant_1.getId(), restaurant_2.getId());
+        restaurant_dao.deleteRestaurant(restaurant_1.getId());
+        assertEquals(1, restaurant_dao.getAllRestaurants().size());
+    }
+
 
     /* Helper functions */
     //  Full restaurant details
