@@ -1,6 +1,7 @@
 package dao;
 
 import models.FoodType;
+import models.Restaurant;
 import java.util.List;
 
 public interface FoodTypeDao {
@@ -31,9 +32,13 @@ public interface FoodTypeDao {
 
      /* Create */
      void addFoodType(FoodType foodtype);
+    //  Many to many implementation here.
+    //  i.e. "This FoodType is now served at this restaurant"
+     void addFoodTypeToRestaurant(FoodType foodtype, Restaurant restaurant);
 
      /* Read */
      List<FoodType> getAllFoodTypes();
+     List<Restaurant> getAllRestaurantsByFoodTypeId(int foodtype_id);
 
      // Todo: FoodType getFoodTypeById(int id);
 

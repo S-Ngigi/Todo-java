@@ -1,12 +1,14 @@
 package dao;
 
 import models.FoodType;
+import models.Restaurant;
 
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class Sql2oFoodTypeDao implements FoodTypeDao {
     
@@ -29,6 +31,12 @@ public class Sql2oFoodTypeDao implements FoodTypeDao {
         }
     }
 
+    // * Many to Many implementation here when adding a foodtype to a restaurant
+    @Override
+    public void addFoodTypeToRestaurant(FoodType foodtype, Restaurant restaurant) {
+        // Todo something here.
+    }
+
     /* Getting all the foodtypes that were committed to the database */
     @Override
     public List<FoodType> getAllFoodTypes() {
@@ -36,6 +44,13 @@ public class Sql2oFoodTypeDao implements FoodTypeDao {
             return connect.createQuery("SELECT * FROM foodtypes")
                                          .executeAndFetch(FoodType.class);
         }
+    }
+
+    // * Many to Many implementation here when getting all the restaurant that serves a particular foodtype
+    @Override
+    public List<Restaurant> getAllRestaurantsByFoodTypeId(int foodtype_id){
+        List<Restaurant> restaurants = new ArrayList<Restaurant>();
+        return restaurants;
     }
 
     /* Deleting a foodtype by ID */

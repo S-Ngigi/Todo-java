@@ -1,12 +1,14 @@
 package dao;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
 import models.Restaurant;
+import models.FoodType;
 
 public class Sql2oRestaurantDao implements RestaurantDao {
     
@@ -32,6 +34,12 @@ public class Sql2oRestaurantDao implements RestaurantDao {
         }
     }
 
+    // * Many to many implementation here when adding a restaurant to a particular foodtype 
+    @Override
+    public void addRestaurantToFoodType(Restaurant restaurant, FoodType foodtype) {
+        // Todo stuff here.
+    }
+
     @Override
     public List<Restaurant> getAllRestaurants() {
         try(Connection connect = sql2o.open()){
@@ -52,6 +60,14 @@ public class Sql2oRestaurantDao implements RestaurantDao {
             ).addParameter("restaurant_id", restaurant_id )
              .executeAndFetchFirst(Restaurant.class);
         }
+    }
+
+    // * Many to Many implementation here when getting all foodtypes a restaurant serves
+    @Override
+    public List<FoodType> getAllFoodTypesByRestaurantId( int restaurant_id){
+        
+        List<FoodType> foodtypes = new ArrayList<FoodType>();
+        return foodtypes;
     }
 
     @Override
