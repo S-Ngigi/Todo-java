@@ -37,7 +37,16 @@ public class Sql2oRestaurantDao implements RestaurantDao {
     // * Many to many implementation here when adding a restaurant to a particular foodtype 
     @Override
     public void addRestaurantToFoodType(Restaurant restaurant, FoodType foodtype) {
-        // Todo stuff here.
+        String sql_command = "INSERT INTO restaurants_foodtypes (foodtype_id, restaurant_id) VALUES (:foodtype_id, :restaurant_id )";
+
+        try(Connection connect = sql2o.open()) {
+            connect.createQuery(sql_command)
+                            .addParameter("foodtype_id", foodtype.getFoodId())
+                            .addParameter("restaurant_id", restaurant.getId())
+                            .executeUpdate();
+        } catch(Sql2oException error) {
+            System.out.println("ERROR IN ADDING RESTAURANT TO FOODTYPE: " + error);
+        }
     }
 
     @Override
@@ -66,7 +75,31 @@ public class Sql2oRestaurantDao implements RestaurantDao {
     @Override
     public List<FoodType> getAllFoodTypesByRestaurantId( int restaurant_id){
         
+        /* Create a List where we will store our foodtype objects */
         List<FoodType> foodtypes = new ArrayList<FoodType>();
+
+        String join_query = "SELECT foodtype_id FROM restaurants_foodtypes WHERE restaurant_id = :restaurant_id";
+        /*
+            Using the query above we query the restaurants _foodtypes join table
+            to get all the foodtypes matching the restaurant_id parameter 
+        */
+        try(Connection connect = sql2o.open()){
+            List<Integer> foodtype_ids = connect.createQuery(join_query)
+            .addParameter("restaurant_id", restaurant_id)
+            .executeAndFetch(Integer.class);
+        /* 
+            We loop through the resulting foodtype_ids add matching data to our
+            foodtypes_list
+        */
+            for(Integer foodtype_id : foodtype_ids) {
+                String foodtype_query = "SELECT * FROM foodtypes WHERE id = :foodtype_id";
+                foodtypes.add(
+                        connect.createQuery(foodtype_query)
+                                        .addParameter("foodtype_id", foodtype_id)
+                                        .executeAndFetchFirst(FoodType.class)
+                );
+            }
+        }
         return foodtypes;
     }
 

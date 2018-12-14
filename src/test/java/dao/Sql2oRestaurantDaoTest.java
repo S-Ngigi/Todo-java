@@ -46,13 +46,13 @@ public class Sql2oRestaurantDaoTest {
         FoodType foodtype_2 = altFoodtypeSetUp();
 
         // Creating an array of our foodtypes
-        FoodType[] foodtypes_arr = { foodtype_1, foodtype_2 };
-
+        
         Restaurant test_restaurant = restaurantSetUp();
-
+        
         restaurant_dao.addRestaurantToFoodType(test_restaurant, foodtype_1);
         restaurant_dao.addRestaurantToFoodType(test_restaurant, foodtype_2);
-
+        FoodType[] foodtypes_arr = { foodtype_1, foodtype_2 };
+        
         assertEquals(Arrays.asList(foodtypes_arr), 
                                 restaurant_dao.getAllFoodTypesByRestaurantId(test_restaurant.getId()));
     }
