@@ -34,7 +34,15 @@ public class Sql2oFoodTypeDao implements FoodTypeDao {
     // * Many to Many implementation here when adding a foodtype to a restaurant
     @Override
     public void addFoodTypeToRestaurant(FoodType foodtype, Restaurant restaurant) {
-        // Todo something here.
+        String sql_command = "INSERT INTO restaurants_foodtypes (foodtype_id, restaurant_id) VALUES (:foodtype_id, :restaurant_id )";
+        try(Connection connect = sql2o.open()){
+            connect.createQuery(sql_command)
+                            .addParameter("foodtype_id", foodtype.getFoodId())
+                            .addParameter("restaurant_id", restaurant.getId())
+                            .executeUpdate();
+        } catch(Sql2oException error) {
+            System.out.println("ERROR WHEN ADDING TO RESTAURANTS_FOODTYPES: " + error);
+        }
     }
 
     /* Getting all the foodtypes that were committed to the database */
@@ -49,7 +57,29 @@ public class Sql2oFoodTypeDao implements FoodTypeDao {
     // * Many to Many implementation here when getting all the restaurant that serves a particular foodtype
     @Override
     public List<Restaurant> getAllRestaurantsByFoodTypeId(int foodtype_id){
+
         List<Restaurant> restaurants = new ArrayList<Restaurant>();
+
+        String join_query = "SELECT restaurant_id FROM restaurants_foodtypes WHERE  foodtype_id = :foodtype_id";
+
+        try(Connection connect = sql2o.open()) {
+            /* We query all the ids that match a foodtype_id */
+            List<Integer> restaurant_ids = connect.createQuery(join_query).addParameter("foodtype_id", foodtype_id)
+            .executeAndFetch(Integer.class);
+            /* 
+            We loop through our restaurant_ids and add  the matching data restaurants array list 
+            */
+            for(Integer restaurant_id: restaurant_ids) {
+                String restaurant_query = "SELECT * FROM restaurants WHERE id = :restaurant_id";
+                restaurants.add(
+                    connect.createQuery(restaurant_query)
+                                    .addParameter("restaurant_id", restaurant_id)
+                                    .executeAndFetchFirst(Restaurant.class)
+                );
+            }
+        } catch (Sql2oException error) {
+            System.out.println("ERROR WHEN FETCHING RESTAURANTS BY FOODTYPE_ID: " + error);
+        }
         return restaurants;
     }
 
