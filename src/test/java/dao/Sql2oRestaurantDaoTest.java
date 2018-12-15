@@ -106,6 +106,18 @@ public class Sql2oRestaurantDaoTest {
         assertEquals(1, restaurant_dao.getAllRestaurants().size());
     }
 
+    @Test
+    public void deletingFoodTypeUpdatesJoinTableTest() throws Exception {
+        Restaurant test_restaurant =  restaurantSetUp();
+        FoodType foodtype_1 = foodtypeSetUp();
+        FoodType foodtype_2 = altFoodtypeSetUp();
+        foodtype_dao.addFoodTypeToRestaurant(foodtype_1, test_restaurant);
+        foodtype_dao.addFoodTypeToRestaurant(foodtype_2, test_restaurant);
+        assertEquals(2, restaurant_dao.getAllFoodTypesByRestaurantId(test_restaurant.getId()).size());
+        foodtype_dao.deleteFoodTypeById(foodtype_2.getFoodId());
+        assertEquals(1, restaurant_dao.getAllFoodTypesByRestaurantId(test_restaurant.getId()).size());
+    }
+
     /* Testing that the clearAllRestaurant Method is working properly */
     @Test
     public void clearAllRestaurantTest() throws Exception {

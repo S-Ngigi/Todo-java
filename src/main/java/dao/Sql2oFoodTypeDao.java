@@ -86,8 +86,12 @@ public class Sql2oFoodTypeDao implements FoodTypeDao {
     /* Deleting a foodtype by ID */
     @Override
     public void deleteFoodTypeById(int foodtype_id) {
+        String delete_join = "DELETE FROM restaurants_foodtypes WHERE foodtype_id = :foodtype_id";
         try(Connection connect = sql2o.open()){
             connect.createQuery("DELETE FROM foodtypes WHERE id = :foodtype_id")
+                            .addParameter("foodtype_id", foodtype_id)
+                            .executeUpdate();
+            connect.createQuery(delete_join)
                             .addParameter("foodtype_id", foodtype_id)
                             .executeUpdate();
         } catch (Sql2oException error) {
@@ -99,8 +103,9 @@ public class Sql2oFoodTypeDao implements FoodTypeDao {
     @Override
     public void clearAllFoodTypes(){
         try(Connection connect = sql2o.open()){
-            connect.createQuery("DELETE FROM foodtypes")
-                            .executeUpdate();
+            connect.createQuery("DELETE FROM foodtypes").executeUpdate();
+            connect.createQuery("DELETE FROM restaurants_foodtypes")
+                            .executeUpdate();         
         } catch(Sql2oException error) {
             System.out.println("ERROR WHEN DELETING ALL FOODTYPES FROM DB: " + error);
         }
