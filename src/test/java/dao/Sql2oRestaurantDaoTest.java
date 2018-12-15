@@ -150,7 +150,8 @@ public class Sql2oRestaurantDaoTest {
                 "Gramercy Tavern", 
                 "42 E 20th St, New York", 
                 "NY 10003", "+1 212-477-0777",
-                "https://www.gramercytavern.com/", "events@gramercytavern.com", 
+                "https://www.gramercytavern.com/", 
+                "events@gramercytavern.com", 
                 "https://bit.ly/2Btwb4O"
         );
         restaurant_dao.addRestaurant(dummy_restaurant);
