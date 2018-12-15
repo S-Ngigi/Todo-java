@@ -145,7 +145,8 @@ public class Sql2oRestaurantDao implements RestaurantDao {
     public void clearAllRestaurants(){
         try (Connection connect = sql2o.open()){
             connect.createQuery("DELETE FROM restaurants").executeUpdate();
-            connect.createQuery("DELETE FROM restaurants_foodtypes");
+            connect.createQuery("DELETE FROM restaurants_foodtypes")
+                            .executeUpdate();
         } catch (Sql2oException error) {
             System.out.println("ERROR WHEN DELETING ALL RESTAURANTS" + error);
         }

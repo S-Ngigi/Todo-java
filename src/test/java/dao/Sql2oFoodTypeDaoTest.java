@@ -97,6 +97,22 @@ public class Sql2oFoodTypeDaoTest {
                 assertEquals(1, foodtype_dao.getAllRestaurantsByFoodTypeId(test_foodtype.getFoodId()).size());
     }
 
+    @Test
+    public void clearAllFoodTypesAlsoUpdatesJoinTable() throws Exception {
+        FoodType foodtype_1 = foodtypeSetUp();
+        FoodType foodtype_2 = altFoodtypeSetUp();
+        Restaurant test_restaurant = restaurantSetUp();
+
+        foodtype_dao.addFoodTypeToRestaurant(foodtype_1, test_restaurant);
+        foodtype_dao.addFoodTypeToRestaurant(foodtype_2, test_restaurant);
+
+        assertEquals(2, restaurant_dao.getAllFoodTypesByRestaurantId(test_restaurant.getId()).size());
+
+        foodtype_dao.clearAllFoodTypes();
+
+        assertEquals(0, restaurant_dao.getAllFoodTypesByRestaurantId(test_restaurant.getId()).size());
+    }
+
 
     /* Helper functions */
     // * FoodType set up
