@@ -81,11 +81,32 @@ public class Sql2oFoodTypeDaoTest {
         assertEquals(0, foodtype_dao.getAllFoodTypes().size());
     }
 
+    /* 
+    We make sure that when a restaurant is removed the relationship it has with a
+    foodtype is also removed. 
+    */
+    @Test
+    public void deletingRestaurantUpdatesJoinTableTest() throws Exception {
+                FoodType test_foodtype = foodtypeSetUp();
+                Restaurant restaurant_1 = restaurantSetUp();
+                Restaurant restaurant_2 = altRestaurantSetUp();
+                restaurant_dao.addRestaurantToFoodType(restaurant_1, test_foodtype);
+                restaurant_dao.addRestaurantToFoodType(restaurant_2, test_foodtype);
+                assertEquals(2, foodtype_dao.getAllRestaurantsByFoodTypeId(test_foodtype.getFoodId()).size());
+                restaurant_dao.deleteRestaurant(restaurant_1.getId());
+                assertEquals(1, foodtype_dao.getAllRestaurantsByFoodTypeId(test_foodtype.getFoodId()).size());
+    }
+
 
     /* Helper functions */
     // * FoodType set up
     public FoodType foodtypeSetUp() {
         FoodType dummy_foodtype = new FoodType("Pizza");
+        foodtype_dao.addFoodType(dummy_foodtype);
+        return dummy_foodtype;
+    }
+    public FoodType altFoodtypeSetUp() {
+        FoodType dummy_foodtype = new FoodType("Barbecue");
         foodtype_dao.addFoodType(dummy_foodtype);
         return dummy_foodtype;
     }

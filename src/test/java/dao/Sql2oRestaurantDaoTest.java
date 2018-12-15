@@ -106,6 +106,7 @@ public class Sql2oRestaurantDaoTest {
         assertEquals(1, restaurant_dao.getAllRestaurants().size());
     }
 
+    /* Testing that the clearAllRestaurant Method is working properly */
     @Test
     public void clearAllRestaurantTest() throws Exception {
         Restaurant restaurant_1 = restaurantSetUp();
@@ -115,7 +116,6 @@ public class Sql2oRestaurantDaoTest {
         restaurant_dao.clearAllRestaurants();
         assertEquals(0, restaurant_dao.getAllRestaurants().size());
     }
-
 
     /* Helper functions */
     //  Full restaurant details

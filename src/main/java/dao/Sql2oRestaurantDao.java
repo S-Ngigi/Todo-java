@@ -128,9 +128,13 @@ public class Sql2oRestaurantDao implements RestaurantDao {
 
     @Override
     public void deleteRestaurant(int id){
+        String delete_join = "DELETE from restaurants_foodtypes WHERE restaurant_id = :restaurant_id";
         try(Connection connect = sql2o.open()){
             connect.createQuery("DELETE FROM restaurants WHERE id = :id")
                             .addParameter("id", id)
+                            .executeUpdate();
+            connect.createQuery(delete_join)
+                            .addParameter("restaurant_id", id)
                             .executeUpdate();
         } catch (Sql2oException error) {
             System.out.println("ERROR WHEN DELETING RESTAURANT FROM DB: " + error);
