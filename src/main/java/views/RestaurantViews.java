@@ -40,13 +40,24 @@ public class RestaurantViews {
         // * Accepting a GET request to get all RESTAURANTS
         get("/restaurants", "application/json", (request, response) -> {
             // * Display the all the restaurants
-            return gson.toJson(restaurant_dao.getAllRestaurants());
+           if(restaurant_dao.getAllRestaurants().size() > 0){
+                return gson.toJson(restaurant_dao.getAllRestaurants());
+           }
+           else {
+                return "{\"message\" : \"Sorry, no restaurants are currently listed.\"}";
+           }
         });
 
         // * Accepting a GET request to get a specific RESTAURANT
         get("/restaurant/:id", "application/json", (request, response) -> {
             int restaurant_id = Integer.parseInt(request.params("id"));
-            return gson.toJson(restaurant_dao.getRestaurantById(restaurant_id));
+            Restaurant found_restaurant = restaurant_dao.getRestaurantById(restaurant_id);
+           if(found_restaurant == null) {
+                return "{\"message\" : \"No restaurant found with that id\"}";
+           } 
+           else {
+                return gson.toJson(found_restaurant);
+           }
         });
 
         /*
