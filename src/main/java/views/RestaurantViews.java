@@ -67,8 +67,13 @@ public class RestaurantViews {
 
         // *GET all FOODTYPES
         get("/foodtypes", "application/json", (request, response) -> {
-            return gson.toJson(foodtype_dao.getAllFoodTypes());
-            
+            return gson.toJson(foodtype_dao.getAllFoodTypes()); 
+        });
+
+        // * GET foodtype based on Id
+        get("/foodtype/:foodtype_id", "application/json", (request, response) -> {
+            int foodtype_id = Integer.parseInt(request.params("foodtype_id"));
+            return gson.toJson(foodtype_dao.getFoodTypeById(foodtype_id));
         });
 
         // * POSTING a new REVIEW on a specific restaurant.
