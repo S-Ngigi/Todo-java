@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 
 import dao.Sql2oRestaurantDao;
 import dao.Sql2oReviewDao;
+import dao.Sql2oFoodTypeDao;
 
 import models.Restaurant;
+import models.FoodType;
 import models.Review;
 
 import org.sql2o.Connection;
@@ -18,17 +20,19 @@ public class RestaurantViews {
     public  void restaurantRoutes() {
 
         Sql2oRestaurantDao restaurant_dao;
+        Sql2oFoodTypeDao foodtype_dao;
         Sql2oReviewDao review_dao;
         Connection connect;
         Gson gson = new Gson();
         String connection_string = "jdbc:h2:~/yelpish_api.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connection_string, "", "");
         restaurant_dao = new Sql2oRestaurantDao(sql2o);
+        foodtype_dao = new Sql2oFoodTypeDao(sql2o);
         review_dao = new Sql2oReviewDao(sql2o);
         connect = sql2o.open();
         System.out.println(connect);
 
-        // * Accepting a POST request to the specified path in JSON format
+        // * Accepting a POST request for a new RESTAURANT to the specified path in JSON format
         post("/restaurants/new", "application/json", (request, response) -> {
 
             // * Make Java Object from JSON using GSON
@@ -41,19 +45,33 @@ public class RestaurantViews {
             return gson.toJson(restaurant);
         });
 
-        // * Accepting a GET request to get all restaurants
+        // * Accepting a GET request to get all RESTAURANTS
         get("/restaurants", "application/json", (request, response) -> {
             // * Display the all the restaurants
             return gson.toJson(restaurant_dao.getAllRestaurants());
         });
 
-        // * Accepting a GET request to get a specific restaurant
+        // * Accepting a GET request to get a specific RESTAURANT
         get("/restaurant/:id", "application/json", (request, response) -> {
             int restaurant_id = Integer.parseInt(request.params("id"));
             return gson.toJson(restaurant_dao.getRestaurantById(restaurant_id));
         });
 
-        // * Posting a new review on a specific restaurant.
+        // * POSTING  a FOODTYPE
+        post("/foodtypes/new", "application/json", (request, response)->{
+            FoodType foodtype = gson.fromJson(request.body(), FoodType.class);
+            foodtype_dao.addFoodType(foodtype);
+            response.status(201);
+            return gson.toJson(foodtype);
+        });
+
+        // *GET all FOODTYPES
+        get("/foodtypes", "application/json", (request, response) -> {
+            return gson.toJson(foodtype_dao.getAllFoodTypes());
+            
+        });
+
+        // * POSTING a new REVIEW on a specific restaurant.
         post("/restaurant/:restaurant_id/review/new", "application/json", (request, response) -> {
             // * Extracting the restaurant_id that we want to review.
             int restaurant_id = Integer.parseInt(request.params("restaurant_id"));
@@ -68,6 +86,7 @@ public class RestaurantViews {
             
         });
 
+        // * GETTING all REVIEWS for a restaurant.
         get("/restaurant/:restaurant_id/reviews", "application/json", (request, response) -> {
             //  * Extracting the restaurant_id from the request
             int restaurant_id = Integer.parseInt(request.params("restaurant_id"));

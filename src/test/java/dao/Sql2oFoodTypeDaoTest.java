@@ -62,6 +62,14 @@ public class Sql2oFoodTypeDaoTest {
     }
 
     @Test
+    public void getFoodTypeByIdTest() throws Exception {
+        FoodType foodtype_1 = foodtypeSetUp();
+        FoodType foodtype_2 = altFoodtypeSetUp();
+        assertNotEquals(foodtype_1.getFoodId(), foodtype_2.getFoodId());
+        assertEquals("Barbecue", foodtype_dao.getFoodTypeById(foodtype_2.getFoodId()).getName());
+    }
+
+    @Test
     public void deleteFoodTypeByIdTest() throws Exception {
         FoodType foodtype_1 = foodtypeSetUp();
         FoodType foodtype_2 = foodtypeSetUp();

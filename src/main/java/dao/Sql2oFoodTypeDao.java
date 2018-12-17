@@ -54,6 +54,17 @@ public class Sql2oFoodTypeDao implements FoodTypeDao {
         }
     }
 
+    /* Get foodtype by Id */
+    @Override
+    public FoodType getFoodTypeById(int foodtype_id){
+        String sql_command = "SELECT * FROM foodtypes WHERE id = :foodtype_id";
+        try(Connection connect = sql2o.open()){
+            return connect.createQuery(sql_command)
+                                        .addParameter("foodtype_id", foodtype_id)
+                                        .executeAndFetchFirst(FoodType.class);
+        }
+    }
+
     // * Many to Many implementation here when getting all the restaurant that serves a particular foodtype
     @Override
     public List<Restaurant> getAllRestaurantsByFoodTypeId(int foodtype_id){
