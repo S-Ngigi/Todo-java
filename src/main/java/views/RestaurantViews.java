@@ -1,10 +1,15 @@
 package views;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.gson.Gson;
 
 import dao.Sql2oRestaurantDao;
 
 import models.Restaurant;
+
+import exceptions.ApiException;
 
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -64,6 +69,17 @@ public class RestaurantViews {
          * FILTERS - Allow us to always execute the code block within to execute after
          * recieving a request allowing for more DRY code.
          */
+
+        exception(ApiException.class, (exception, request, response) -> {
+            ApiException error = (ApiException) exception;
+            Map<String, Object> gsonJsonMap = new HashMap<>();
+            gsonJsonMap.put("status", error.getStatusCode());
+            gsonJsonMap.put("error_message", error.getMessage());
+            response.type("application/json");
+            response.status(error.getStatusCode());
+            response.body(gson.toJson(gsonJsonMap));
+        });
+
         after((request, response) -> {
             response.type("application/json");
         });
