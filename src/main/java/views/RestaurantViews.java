@@ -3,8 +3,10 @@ package views;
 import com.google.gson.Gson;
 
 import dao.Sql2oRestaurantDao;
+import dao.Sql2oReviewDao;
 
 import models.Restaurant;
+import models.Review;
 
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -16,11 +18,13 @@ public class RestaurantViews {
     public  void restaurantRoutes() {
 
         Sql2oRestaurantDao restaurant_dao;
+        Sql2oReviewDao review_dao;
         Connection connect;
         Gson gson = new Gson();
         String connection_string = "jdbc:h2:~/yelpish_api.db;INIT=RUNSCRIPT from 'classpath:db/create.sql'";
         Sql2o sql2o = new Sql2o(connection_string, "", "");
         restaurant_dao = new Sql2oRestaurantDao(sql2o);
+        review_dao = new Sql2oReviewDao(sql2o);
         connect = sql2o.open();
         System.out.println(connect);
 
@@ -47,6 +51,28 @@ public class RestaurantViews {
         get("/restaurant/:id", "application/json", (request, response) -> {
             int restaurant_id = Integer.parseInt(request.params("id"));
             return gson.toJson(restaurant_dao.getRestaurantById(restaurant_id));
+        });
+
+        // * Posting a new review on a specific restaurant.
+        post("/restaurant/:restaurant_id/review/new", "application/json", (request, response) -> {
+            // * Extracting the restaurant_id that we want to review.
+            int restaurant_id = Integer.parseInt(request.params("restaurant_id"));
+            // * Extracting the reveiw json and converting it to an Object
+            Review review = gson.fromJson(request.body(), Review.class);
+            
+            // * We set the restaurant _id to the restaurant_id property of a Review.
+            review.setRestaurant_id(restaurant_id);
+            review_dao.addReview(review);
+            response.status(201);
+            return gson.toJson(review);
+            
+        });
+
+        get("/restaurant/:restaurant_id/reviews", "application/json", (request, response) -> {
+            //  * Extracting the restaurant_id from the request
+            int restaurant_id = Integer.parseInt(request.params("restaurant_id"));
+           return gson.toJson(review_dao.getAllReviewsForRestaurant(restaurant_id));
+
         });
 
         /*
