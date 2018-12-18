@@ -60,20 +60,43 @@ public class Sql2oReviewDao implements ReviewDao {
 
     // * SORT from New to Old
     public List<Review> getAllReviewsByRestaurantIdSortedNewestToOldest(int restaurant_id) {
+        // * Our unsorted reviews;
         List<Review> unsorted_reviews = getAllReviewsForRestaurant(restaurant_id);
+        //  * Below list will store our sorted_reviews
         List<Review> sorted_review = new ArrayList<>();
 
+        // * Our counter
         int index = 1;
 
+        // * Looping through our unsorted list.
         for (Review rev : unsorted_reviews){
-            // * This if statement is to deal with arrayIndex exception and handle the last element properly
+            /*
+             * This if statement is to deal with arrayIndex exception and handle
+             * the last element properly. Basically checking if the index and the 
+             * unsorted_array are the same size.
+             */
             if(index == unsorted_reviews.size()){
+                // * Here we compare the first item making sure that it was recently posted.
                 if(rev.compareTo(unsorted_reviews.get(index-1)) == -1) {
+                    // * We add it to our sorted_review
                     sorted_review.add(0, unsorted_reviews.get(index-1));
                 }
+                // * We end our loop.
                 break;
             }
             else {
+                /*
+                 * Looping through the unsorted_review because it is greater than
+                 * 1.
+                 * 
+                 * We go through every index of the unsorted_reviews and check if
+                 * it is a recent posted , older post or posts that were created
+                 * at the same time.
+                 * 
+                 * They are then added to the sorted_reviews List accordingly.
+                 * Starting with the recent, reviews that were posted at the same
+                 * time, then older posts.
+                 */
                 if(rev.compareTo(unsorted_reviews.get(index)) == -1 ) {
                     sorted_review.add(0, unsorted_reviews.get(index));
                     index++;
@@ -88,7 +111,7 @@ public class Sql2oReviewDao implements ReviewDao {
                 }
             }
         }
-
+        // * We return our sorted_review list.
         return sorted_review;
     }
 
