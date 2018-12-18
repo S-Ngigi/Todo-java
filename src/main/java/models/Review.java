@@ -2,6 +2,12 @@ package models;
 
 import java.util.Objects;
 
+import java.text.SimpleDateFormat;
+// import java.time.LocalDateTime;
+// import java.util.Calendar;
+// import java.util.Comparator;
+import java.util.Date;
+
 public class Review {
     private int id;
     private String content;
@@ -19,7 +25,7 @@ public class Review {
         this.rating = rating;
         this.restaurant_id = restaurant_id;
         this.created_at = System.currentTimeMillis();
-
+        setFormatted_created_at();
     }
 
     /* Review getters and Setters */
@@ -74,13 +80,26 @@ public class Review {
     }
 
     public String getFormatted_created_at() {
-        // String timestamp = "formatted time";
-        // return timestamp;
-        return formatted_created_at;
+        System.out.println(formatted_created_at);
+        // * Making a date object out of the created at milliseconds
+        Date date = new Date(created_at);
+        // * Defining our pattern
+        String date_pattern = "MM/dd/yyyy @ K:mm a";
+        // *Instantiating a new simple date format with our desired pattern
+        SimpleDateFormat sdf = new SimpleDateFormat(date_pattern);
+        // * Formatting our date object using our pattern
+        return sdf.format(date);
     }
 
     public void setFormatted_created_at(){
-        this.formatted_created_at = "timestamp";
+        // *Takes the current time we want to set created_at in seconds
+        Date date = new Date(this.created_at);
+        // * Defining the pattern
+        String date_pattern = "MM/dd/yyyy @ K:mm a";
+        // * new simple date format with our date_pattern
+        SimpleDateFormat sdf = new SimpleDateFormat(date_pattern);
+        // * Setting formatted_created_at to new formatted date.
+        this.formatted_created_at = sdf.format(date);
     }
 
     @Override

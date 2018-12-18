@@ -80,8 +80,12 @@ public class Sql2oReviewDaoTest{
 
         long creation_time = test_review.getCreated_at();
         long db_creation_time = review_dao.getAllReviews().get(0).getCreated_at();
-        assertEquals(creation_time, db_creation_time);
 
+        String formatted_creation_time = test_review.getFormatted_created_at();
+        String formatted_db_creation_time = review_dao.getAllReviews().get(0).getFormatted_created_at(); 
+
+        assertEquals(creation_time, db_creation_time);
+        assertEquals(formatted_creation_time, formatted_db_creation_time);
     }
 
      /*Helper functions */
