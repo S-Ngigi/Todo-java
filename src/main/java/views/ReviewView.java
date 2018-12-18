@@ -37,7 +37,7 @@ public class ReviewView {
         post("/restaurant/:restaurant_id/review/new", "application/json", (request, response) -> {
             int restaurant_id = Integer.parseInt(request.params("restaurant_id"));
             Restaurant restaurant_result = restaurant_dao.getRestaurantById(restaurant_id);
-            System.out.println("RESTAURANT RESTULT: " + restaurant_result);
+            System.out.println("RESTAURANT RESULT: " + restaurant_result);
             if(restaurant_result == null){
                 throw new ApiException(404, String.format(
                     "Restaurant %s does not exist",
@@ -51,6 +51,25 @@ public class ReviewView {
                 review_dao.addReview(review);
                 response.status(201);
                 return gson.toJson(review);
+            }
+        });
+
+        //  * GET all REVIEWS for a restaurant
+        get("/restaurant/:restaurant_id/reviews", "application/json", (request, response) -> {
+            int restaurant_id = Integer.parseInt(request.params("restaurant_id"));
+            Restaurant restaurant_result = restaurant_dao.getRestaurantById(restaurant_id);
+            System.out.println("RESTAURANT RESULT: "+restaurant_result);
+            if(restaurant_result == null){
+                throw new ApiException(404, String.format(
+                    "Restaurant with id: %s does not exist",
+                    request.params("restaurant_id")
+                ));
+            }
+            else if (review_dao.getAllReviewsForRestaurant(restaurant_id).size() == 0) {
+                return "{\" message\" : \"Sorry, no reviews posted for this restaurant yet.\"}";
+            }
+            else {
+                return gson.toJson(review_dao.getAllReviewsForRestaurant(restaurant_id));
             }
         });
 
