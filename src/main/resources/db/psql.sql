@@ -19,10 +19,7 @@ CREATE TABLE IF NOT EXISTS foodtypes (
 
 CREATE TABLE IF NOT EXISTS reviews (
     id serial PRIMARY KEY NOT NULL,
-    content VARCHAR NOT NULL,
-    written_by VARCHAR NOT NULL,
-    rating VARCHAR NOT NULL,
-    restaurant_id INTEGER NOT NULL
+    content VARCHAR NOT NULL
 );
 
 CREATE DATABASE yelpish_test TEMPLATE yelpish;

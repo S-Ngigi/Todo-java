@@ -3,20 +3,18 @@ package dao;
 import models.Review;
 import java.util.List;
 
-
-public interface ReviewDao{
+public interface ReviewDao {
     /* Create */
-    void  addReview(Review review);
+    void addReview(Review review);
 
     /* Read */
     List<Review> getAllReviews();
-    List<Review> getAllReviewsByRestaurant(int restaurant_id);
-
-    /* Update */
-    // Todo: void updateReview()
+    List<Review> getAllReviewsForRestaurant(int restaurant_id);
+    List<Review> getAllReviewsByRestaurantIdSortedNewestToOldest(int restaurant_id);
+   
+    /*  Todo Update */
 
     /* Delete */
-    void deleteReviewById(int review_id);
+    void deleteByReviewId(int review_id);
     void clearAllReviews();
-
 }

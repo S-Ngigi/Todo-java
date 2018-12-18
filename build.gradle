@@ -2,6 +2,10 @@ plugins {
     id 'java'
     id 'application'
 }
+
+compileJava.options.fork = true
+compileJava.options.forkOptions.executable = '/home/jedi/.sdkman/candidates/java/current/bin/javac'
+
 /* Deployment manenos */
 applicationName = "Yelpish-Api"
 mainClassName = 'App'
@@ -10,6 +14,7 @@ group 'hai.com'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -29,8 +34,15 @@ dependencies {
     /* Objects to json mapping */
     compile 'com.google.code.gson:gson:2.8.5'
     /* Db manenos */
+<<<<<<< HEAD
     compile group: 'org.postgresql', name: 'postgresql', version: '9.4-1201-jdbc41'
+=======
+    /*compile group: 'org.postgresql', name: 'postgresql', version: '9.4-1201-jdbc41'*/
+    compile group: 'com.h2database', name: 'h2', version: '1.4.196'
+    
+>>>>>>> time-sort-using-comparable
 }
+
 
 /* Deployment manenos */
 defaultTasks = ['clean']
