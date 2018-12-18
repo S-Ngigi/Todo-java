@@ -88,6 +88,71 @@ public class Sql2oReviewDaoTest{
         assertEquals(formatted_creation_time, formatted_db_creation_time);
     }
 
+    @Test
+    public void reviewsSortedByCreatedAtCorrectly() throws Exception {
+        Restaurant test_restaurant = restaurantSetUp();
+        Review test_review = new Review("Dope manenos", "DevOps", 3, test_restaurant.getId());
+        review_dao.addReview(test_review);
+
+        try {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException error) {
+            error.printStackTrace();
+        }
+
+        Review second_review = new Review("Mambo Mbaya", "That Guy", 4, test_restaurant.getId());
+        review_dao.addReview(second_review);
+
+        assertEquals(
+            "Mambo Mbaya", review_dao.getAllReviewsByRestaurantIdSortedNewestToOldest(test_review.getRestaurant_id()).get(0).getContent()
+        );
+    }
+
+    @Test
+    public void altSortedReviewTest() throws Exception {
+        Restaurant test_restaurant = restaurantSetUp();
+
+        //  * Adding 4 review objects and simulated time delay in adding them.
+        Review review_1 = reviewByRestaurantSetUp(test_restaurant);
+
+        System.out.println(review_1.getRestaurant_id());
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException error) {
+            error.printStackTrace();
+        }
+
+        Review review_2 = new Review("Not Bad", "Him", 3, test_restaurant.getId());
+        review_dao.addReview(review_2);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException error) {
+            error.printStackTrace();
+        }
+
+        Review review_3 = new Review("Dope manenos", "DevOps", 3, test_restaurant.getId());
+        review_dao.addReview(review_3);
+
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException error) {
+            error.printStackTrace();
+        }
+
+        Review review_4 = new Review("Mambo Mbaya", "That Guy", 4, test_restaurant.getId());
+        review_dao.addReview(review_4);
+
+        assertEquals(4, review_dao.getAllReviewsForRestaurant(test_restaurant.getId()).size());
+
+        assertEquals(
+            "Mambo Mbaya", 
+            review_dao.getAllReviewsByRestaurantIdSortedNewestToOldest(test_restaurant.getId()).get(0).getContent()
+        );
+    }
+
      /*Helper functions */
     public Review reviewSetUp () {
         Review dummy_review = new Review("Fancy and Affordable", "Phill", 4, 1);

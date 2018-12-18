@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.ArrayList;
+
 import models.Review;
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -54,6 +56,40 @@ public class Sql2oReviewDao implements ReviewDao {
             ).addParameter("restaurant_id", restaurant_id)
              .executeAndFetch(Review.class);
         }
+    }
+
+    // * SORT from New to Old
+    public List<Review> getAllReviewsByRestaurantIdSortedNewestToOldest(int restaurant_id) {
+        List<Review> unsorted_reviews = getAllReviewsForRestaurant(restaurant_id);
+        List<Review> sorted_review = new ArrayList<>();
+
+        int index = 1;
+
+        for (Review rev : unsorted_reviews){
+            // * This if statement is to deal with arrayIndex exception and handle the last element properly
+            if(index == unsorted_reviews.size()){
+                if(rev.compareTo(unsorted_reviews.get(index-1)) == -1) {
+                    sorted_review.add(0, unsorted_reviews.get(index-1));
+                }
+                break;
+            }
+            else {
+                if(rev.compareTo(unsorted_reviews.get(index)) == -1 ) {
+                    sorted_review.add(0, unsorted_reviews.get(index));
+                    index++;
+                }
+                else if (rev.compareTo(unsorted_reviews.get(index)) == 0) {
+                    sorted_review.add(0, unsorted_reviews.get(index));
+                    index++;
+                }
+                else {
+                    sorted_review.add(0, unsorted_reviews.get(index));
+                    index++;
+                }
+            }
+        }
+
+        return sorted_review;
     }
 
     /*  

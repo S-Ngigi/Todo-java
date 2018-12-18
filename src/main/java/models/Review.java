@@ -5,10 +5,10 @@ import java.util.Objects;
 import java.text.SimpleDateFormat;
 // import java.time.LocalDateTime;
 // import java.util.Calendar;
-// import java.util.Comparator;
+import java.lang.Comparable;
 import java.util.Date;
 
-public class Review {
+public class Review  implements Comparable<Review>{
     private int id;
     private String content;
     private String written_by;
@@ -70,7 +70,7 @@ public class Review {
         this.restaurant_id = restaurant_id;
     }
 
-    // * Time manenos: getters & setters
+    // * TIME: getters & setters
     public long getCreated_at(){
         return created_at;
     }
@@ -100,6 +100,23 @@ public class Review {
         SimpleDateFormat sdf = new SimpleDateFormat(date_pattern);
         // * Setting formatted_created_at to new formatted date.
         this.formatted_created_at = sdf.format(date);
+    }
+
+    // *TIME sort using COMPARATOR
+    @Override
+    public int compareTo(Review review_object) {
+        if(this.created_at < review_object.created_at){
+            // * Meaning "this" object was created earlier  than the rest.
+            return -1;
+        }
+        else if (this.created_at > review_object.created_at) {
+            // *Meaning that our "review_object" was created earlier 
+            return 1;
+        }
+        else {
+            // * Which means both instances were created at the same time
+            return 0;
+        }
     }
 
     @Override

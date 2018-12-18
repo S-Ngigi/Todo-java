@@ -10,6 +10,7 @@ public interface ReviewDao {
     /* Read */
     List<Review> getAllReviews();
     List<Review> getAllReviewsForRestaurant(int restaurant_id);
+    List<Review> getAllReviewsByRestaurantIdSortedNewestToOldest(int restaurant_id);
    
     /*  Todo Update */
 
