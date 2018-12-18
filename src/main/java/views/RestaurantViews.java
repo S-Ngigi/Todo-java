@@ -49,7 +49,7 @@ public class RestaurantViews {
                 return gson.toJson(restaurant_dao.getAllRestaurants());
            }
            else {
-                return "{\"message\" : \"Sorry, no restaurants are currently listed.\"}";
+                throw new ApiException(404, "Sorry, no restaurants are currently listed.");
            }
         });
 
@@ -58,7 +58,7 @@ public class RestaurantViews {
             int restaurant_id = Integer.parseInt(request.params("id"));
             Restaurant found_restaurant = restaurant_dao.getRestaurantById(restaurant_id);
            if(found_restaurant == null) {
-                return "{\"message\" : \"No restaurant found with that id\"}";
+                throw new ApiException(404, String.format("Restaurant with the id:%s does not exists", request.params("id")));
            } 
            else {
                 return gson.toJson(found_restaurant);
@@ -71,12 +71,18 @@ public class RestaurantViews {
          */
 
         exception(ApiException.class, (exception, request, response) -> {
+            // * We type cast our exception to become our ApiException
             ApiException error = (ApiException) exception;
+            // * Instantiate a gsonJsonMap hashmap to store our message and status
             Map<String, Object> gsonJsonMap = new HashMap<>();
+            // * Adding the status to our gsonJsonMap hashmap
             gsonJsonMap.put("status", error.getStatusCode());
+            // * Add the error_message to our gsonJsonMap hashMap
             gsonJsonMap.put("error_message", error.getMessage());
             response.type("application/json");
+            // * Passing the error status code
             response.status(error.getStatusCode());
+            // * Passing our gsonJsonMap as part of our request when exception is thrown.
             response.body(gson.toJson(gsonJsonMap));
         });
 

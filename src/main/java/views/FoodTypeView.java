@@ -1,10 +1,15 @@
 package views;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.google.gson.Gson;
 
 import dao.Sql2oFoodTypeDao;
 
 import models.FoodType;
+
+import exceptions.ApiException;
 
 import org.sql2o.Connection;
 import org.sql2o.Sql2o;
@@ -41,6 +46,17 @@ public class FoodTypeView {
         get("/foodtype/:foodtype_id", "application/json", (request, response) -> {
             int foodtype_id = Integer.parseInt(request.params("foodtype_id"));
             return gson.toJson(foodtype_dao.getFoodTypeById(foodtype_id));
+        });
+
+        // * FILTERS
+        exception(ApiException.class, (exception, request, response) -> {
+            ApiException error = (ApiException) exception;
+            Map<String, Object> gsonJsonMap = new HashMap<>();
+            gsonJsonMap.put("status", error.getStatusCode());
+            gsonJsonMap.put("error_message", error.getMessage());
+            response.type("application/json");
+            response.status(error.getStatusCode());
+            response.body(gson.toJson(gsonJsonMap));
         });
 
         after((request,  response) -> {
