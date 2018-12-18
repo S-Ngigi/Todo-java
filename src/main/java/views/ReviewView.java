@@ -2,6 +2,7 @@ package views;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -48,6 +49,8 @@ public class ReviewView {
                 //  * Extracting the review from the request
                 Review review = gson.fromJson(request.body(), Review.class);
                 review.setRestaurant_id(restaurant_id);
+                review.setCreated_at(); // * Setting the System time;
+                review.setFormatted_created_at(); // * Formatting it correctly
                 review_dao.addReview(review);
                 response.status(201);
                 return gson.toJson(review);
@@ -71,6 +74,31 @@ public class ReviewView {
             else {
                 return gson.toJson(review_dao.getAllReviewsForRestaurant(restaurant_id));
             }
+        });
+
+        // * GET sorted REVIEWS
+        get("/restaurant/:restaurant_id/sorted_reviews", "application/json", (request, response) -> {
+            int restaurant_id = Integer.parseInt(request.params("restaurant_id"));
+            Restaurant restaurant_result = restaurant_dao.getRestaurantById(restaurant_id);
+            System.out.println(restaurant_result);
+
+            List<Review> allReviews;
+
+            if(restaurant_result == null) {
+                throw new ApiException(404, String.format(
+                    "Restaurant with id: %s does not exist",
+                    request.params("restaurant_id")
+                ));
+            }
+            else if (review_dao.getAllReviewsByRestaurantIdSortedNewestToOldest(restaurant_id).size() == 0) {
+                return "{\"message\" : \"Sorry, no reviews for this restaurant yet\"}";
+            }
+            else {
+                allReviews = review_dao.getAllReviewsByRestaurantIdSortedNewestToOldest(restaurant_id);
+
+                return gson.toJson(allReviews);
+            }
+
         });
 
         // * GET all REVIEWS
