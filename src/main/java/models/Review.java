@@ -8,6 +8,8 @@ public class Review {
     private String written_by;
     private int rating;
     private int restaurant_id;   // One to Many Relationship right here.
+    private long created_at;
+    private String formatted_created_at;
 
     /* Our Review Constructor */
     public Review(String content , String written_by, int rating, int restaurant_id){
@@ -16,6 +18,8 @@ public class Review {
         this.written_by = written_by;
         this.rating = rating;
         this.restaurant_id = restaurant_id;
+        this.created_at = System.currentTimeMillis();
+
     }
 
     /* Review getters and Setters */
@@ -58,6 +62,25 @@ public class Review {
 
     public void setRestaurant_id(int restaurant_id){
         this.restaurant_id = restaurant_id;
+    }
+
+    // * Time manenos: getters & setters
+    public long getCreated_at(){
+        return created_at;
+    }
+
+    public void setCreated_at() {
+        this.created_at = System.currentTimeMillis();
+    }
+
+    public String getFormatted_created_at() {
+        // String timestamp = "formatted time";
+        // return timestamp;
+        return formatted_created_at;
+    }
+
+    public void setFormatted_created_at(){
+        this.formatted_created_at = "timestamp";
     }
 
     @Override

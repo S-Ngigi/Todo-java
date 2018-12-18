@@ -21,7 +21,8 @@ CREATE TABLE IF NOT EXISTS reviews (
     content VARCHAR,
     written_by VARCHAR,
     rating INTEGER,
-    restaurant_id INTEGER
+    restaurant_id INTEGER,
+    created_at BIGINT
 );
 
 CREATE TABLE IF NOT EXISTS restaurants_foodtypes (

@@ -74,6 +74,16 @@ public class Sql2oReviewDaoTest{
         assertEquals(0, review_dao.getAllReviews().size() );
     }
 
+    @Test
+    public void timeStampIsReturnedCorrectly() throws Exception {
+        Review test_review = reviewSetUp();
+
+        long creation_time = test_review.getCreated_at();
+        long db_creation_time = review_dao.getAllReviews().get(0).getCreated_at();
+        assertEquals(creation_time, db_creation_time);
+
+    }
+
      /*Helper functions */
     public Review reviewSetUp () {
         Review dummy_review = new Review("Fancy and Affordable", "Phill", 4, 1);

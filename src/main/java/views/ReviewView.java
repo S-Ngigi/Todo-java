@@ -73,6 +73,16 @@ public class ReviewView {
             }
         });
 
+        // * GET all REVIEWS
+        get("/reviews", "application/json", (request, response) -> {
+            if (review_dao.getAllReviews().size() == 0){
+                return "{\"message\": \"Sorry, no reviews posted yet\"}";
+            }
+            else {
+                return gson.toJson(review_dao.getAllReviews());
+            }
+        });
+
         /*
          * FILTERS - Allow us to always execute the code block within to execute after
          * recieving a request allowing for more DRY code.
